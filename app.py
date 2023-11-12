@@ -128,7 +128,7 @@ class Game(db.Model):
     gender = db.Column(db.String(10), unique=False, nullable=False)
     pegi = db.Column(db.String(3), unique=False, nullable=False)
     release = db.Column(db.String(4), unique=False, nullable=False)
-    price = db.Column(db.Numeric(precision=10, scale=2), unique=False, nullable=False)
+    price = db.Column(db.Numeric(precision=4, scale=2), unique=False, nullable=False)
     img = db.Column(db.String(150), unique=True, nullable=False)
     qty = db.Column(db.Integer, unique=False, nullable=False)
     
