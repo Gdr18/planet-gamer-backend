@@ -418,7 +418,7 @@ def select_game(id):
         db.session.delete(game)
         db.session.commit()
 
-        return f'The user {id} was successfully deleted'
+        return f'The game {id} was successfully deleted'
     
 #orders routes
 
