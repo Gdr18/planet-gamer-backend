@@ -67,11 +67,11 @@ games_schema = GameSchema(many=True)
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    name = db.Column(db.String(50), unique=False, nullable=False)
-    password = db.Column(db.String(20), unique=False, nullable=False)
-    admin = db.Column(db.Boolean, unique=False, nullable=False)
-    surnames = db.Column(db.String(40), unique=False, nullable=True)
-    phone_number = db.Column(db.String(9), unique=False, nullable=True)
+    name = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+    admin = db.Column(db.Boolean, nullable=False)
+    surnames = db.Column(db.String(40))
+    phone_number = db.Column(db.String(9))
     addresses = db.relationship('Address', cascade="all, delete", backref='user', lazy=True)
     orders = db.relationship('Order', cascade="all, delete", backref='user', lazy=True)
     
@@ -88,7 +88,7 @@ class User(db.Model):
 class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String(80), nullable=False)
-    second_line_street = db.Column(db.String(40), nullable=True)
+    second_line_street = db.Column(db.String(40))
     postal_code = db.Column(db.String(5), nullable=False)
     city = db.Column(db.String(30), nullable=False)
     address_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
@@ -105,7 +105,7 @@ class Address(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     total = db.Column(db.Numeric(precision=10, scale=2, asdecimal=False), unique=False, nullable=False)
-    qty = db.Column(db.Integer, unique=False, nullable=False)
+    qty = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String(40), nullable=False)
     order_user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
@@ -121,14 +121,14 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(1500), unique=True, nullable=False)
-    platform = db.Column(db.String(20), unique=False, nullable=False)
-    platform_url = db.Column(db.String(20), unique=False, nullable=False)
-    gender = db.Column(db.String(10), unique=False, nullable=False)
-    pegi = db.Column(db.String(3), unique=False, nullable=False)
-    release = db.Column(db.String(4), unique=False, nullable=False)
-    price = db.Column(db.Numeric(precision=4, scale=2), unique=False, nullable=False)
+    platform = db.Column(db.String(20), nullable=False)
+    platform_url = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
+    pegi = db.Column(db.String(3), nullable=False)
+    release = db.Column(db.String(4), nullable=False)
+    price = db.Column(db.Numeric(precision=4, scale=2), nullable=False)
     img = db.Column(db.String(150), unique=True, nullable=False)
-    qty = db.Column(db.Integer, unique=False, nullable=False)
+    qty = db.Column(db.Integer, nullable=False)
     
     def __init__(self, title, description, platform, platform_url, gender, pegi, release, price, img, qty=1 ):
         self.title = title
