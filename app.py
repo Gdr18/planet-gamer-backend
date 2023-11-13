@@ -119,7 +119,7 @@ class Game(db.Model):
     description = db.Column(db.String(1500), unique=True, nullable=False)
     platform = db.Column(db.String(20), nullable=False)
     platform_url = db.Column(db.String(20), nullable=False)
-    gender = db.Column(db.String(10), nullable=False)
+    gender = db.Column(db.String(30), nullable=False)
     pegi = db.Column(db.String(3), nullable=False)
     release = db.Column(db.String(4), nullable=False)
     price = db.Column(db.Numeric(precision=4, scale=2), nullable=False)
