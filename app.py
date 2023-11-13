@@ -21,10 +21,6 @@ ma = Marshmallow()
 
 CORS(app, supports_credentials=True)
 bcrypt = Bcrypt(app)
-
-def begin():
-    with app.app_context():
-        db.create_all()
     
 app.app_context().push()
 
