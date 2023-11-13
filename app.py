@@ -22,11 +22,9 @@ ma = Marshmallow()
 CORS(app, supports_credentials=True)
 bcrypt = Bcrypt(app)
 
-# @app.route('/init')
-# def begin():
-#     with app.app_context():
-#         db.create_all()
-#     return 'ok'
+@app.route('/')
+def begin():
+    return 'hello'
     
 app.app_context().push()
 
