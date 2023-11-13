@@ -255,7 +255,7 @@ def login():
             return {"loggedIn": False}
         else:
             emailSession = session["email"]
-            user = User.query.filter_by(email=emailSession).first() #si hay sesión pero no hay usuario es None
+            user = User.query.filter_by(email=emailSession).first()
             return {"loggedIn": True, "id": user.id}
     if request.method == "DELETE":
         session.pop("email", None)
@@ -436,8 +436,8 @@ def get_orders(order_user_id):
     if user != None:
         orders = user.orders
         return orders_schema.jsonify(orders)
-    else:
-        return {"status": "NO_ORDERS"}
+    # else:
+    #     return {"status": "NO_ORDERS"}
 
 @app.route("/order/<order_user_id>", methods=["POST"])
 def post_order(order_user_id):
