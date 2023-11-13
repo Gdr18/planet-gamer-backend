@@ -7,10 +7,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'https://planet-gamer-backend-a5283f6df278.herokuapp.com/'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///planet_gamer.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///planet_gamer.db'
 app.config['SECRET_KEY'] = 'mis_michis'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://vzhhdizgeirszo:32147a8d57f3122317864686bc74c62534c186953a462b20c040006ceba84db5@ec2-99-80-190-165.eu-west-1.compute.amazonaws.com:5432/d2v4qg8j99k8ml'
 app.config["SESSION_PERMANENT"] = True
 app.config["SESSION_TYPE"] = "filesystem"
 app.config['PERMANENT_SESSION_LIFETIME'] = 10000
