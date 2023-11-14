@@ -430,15 +430,13 @@ def get_orders(order_user_id):
     if user != None:
         orders = user.orders
         return orders_schema.jsonify(orders)
-    # else:
-    #     return {"status": "NO_ORDERS"}
 
 @app.route("/order/<order_user_id>", methods=["POST"])
 def post_order(order_user_id):
     total = request.json['total']
     qty = request.json['qty']
 
-    data = datetime.now()
+    data =  datetime.now().astimezone().isoformat()
     date = data.strftime('%d-%m-%Y, %H:%M:%S')
     
     new_order = Order(total, qty, order_user_id, date)
