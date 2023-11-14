@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from datetime import datetime
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 
@@ -436,7 +436,7 @@ def post_order(order_user_id):
     total = request.json['total']
     qty = request.json['qty']
 
-    data =  datetime.now().astimezone().isoformat()
+    data =  datetime.now(timezone.utc)
     date = data.strftime('%d-%m-%Y, %H:%M:%S')
     
     new_order = Order(total, qty, order_user_id, date)
