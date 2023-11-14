@@ -436,7 +436,7 @@ def post_order(order_user_id):
     total = request.json['total']
     qty = request.json['qty']
 
-    data =  datetime.now(timezone.utc)
+    data =  datetime.now(timezone('Europe/Madrid'))
     date = data.strftime('%d-%m-%Y, %H:%M:%S')
     
     new_order = Order(total, qty, order_user_id, date)
