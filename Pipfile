@@ -13,6 +13,7 @@ marshmallow-sqlalchemy = "*"
 gunicorn = "*"
 psycopg2 = "*"
 waitress = "*"
+pytz = "*"
 
 [dev-packages]
 
