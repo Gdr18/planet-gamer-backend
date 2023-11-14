@@ -155,7 +155,7 @@ def add_user():
     else:
         admin = False
 
-    password = bcrypt.generate_password_hash(password)
+    password = bcrypt.generate_password_hash(password).decode('utf-8')
     
     new_user = User(email, name, password, admin, surnames, phone_number)
 
@@ -199,7 +199,7 @@ def select_user(id):
         user.email = email
 
         if password != "" and not bcrypt.check_password_hash(user.password, password):
-            user.password = bcrypt.generate_password_hash(password)
+            user.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         user.surnames = surnames
         user.phone_number = phone_number
@@ -220,7 +220,7 @@ def login():
         user_exists = User.query.filter_by(email=email).first()
 
         if user_exists:
-            if not bcrypt.check_password_hash(user_exists.password, password):
+            if bcrypt.check_password_hash(user_exists.password, password) == False:
                 return {"error": "Contraseña equivocada"}, 401
             else:
                 session['email'] = email
@@ -231,7 +231,7 @@ def login():
             else:
                 admin = False
 
-            password = bcrypt.generate_password_hash(password)
+            password = bcrypt.generate_password_hash(password).decode('utf-8')
             new_user = User(email, name, password, admin)
 
             db.session.add(new_user)
