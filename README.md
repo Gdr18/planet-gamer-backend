@@ -1,4 +1,5 @@
-# planet_gamer_backend
+# Planet_Gamer_Backend
+
 Backend Planet Gamer. Proyecto final Full Stack Course by Bottega.
 
 Todos los modelos, las rutas y la configuración están en app.py. En la carpeta instance se encuentra la base de datos.
