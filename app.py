@@ -8,7 +8,7 @@ from pytz import timezone
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://lprkthdsoczouq:99ea88ac96ea2fb531524e721fa47c04450e4195ee8121c8f0a816ba305e6272@ec2-79-125-78-170.eu-west-1.compute.amazonaws.com:5432/danih4ikmovl3u'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://lprkthdsoczouq:99ea88ac96ea2fb531524e721fa47c04450e4195ee8121c8f0a816ba305e6272@ec2-79-125-78-170.eu-west-1.compute.amazonaws.com:5432/danih4ikmovl3u'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///planet_gamer.db'
 app.config['SECRET_KEY'] = 'mis_michis'
 app.config["SESSION_PERMANENT"] = True
