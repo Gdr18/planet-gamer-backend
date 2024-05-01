@@ -1,4 +1,4 @@
-# Planet_Gamer_Backend
+# Planet Gamer Backend
 
 Backend Planet Gamer, e-commerce de videojuegos. Proyecto final Full Stack Course by Bottega.
 
