@@ -1,6 +1,6 @@
 # Planet Gamer Backend
 
-Backend Planet Gamer, e-commerce de videojuegos. Proyecto final Full Stack Course by Bottega.
+Backend Planet Gamer, e-commerce de videojuegos. Proyecto final "Full Stack Course by DevCamp & Bottega University".
 
 <a href='https://planet-gamer-backend.onrender.com/'>https://planet-gamer-backend.onrender.com/</a>
 
