@@ -4,18 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+flask-bcrypt = "*"
 flask = "*"
 flask-cors = "*"
-flask-bcrypt = "*"
-flask-sqlalchemy = "*"
 flask-marshmallow = "*"
+flask-sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
-gunicorn = "*"
 psycopg2 = "*"
-waitress = "*"
 pytz = "*"
+waitress = "*"
+pendulum = "*"
 
 [dev-packages]
+python-dotenv = "*"
 
 [requires]
-python_version = "3.11.8"
+python_version = "3.11"

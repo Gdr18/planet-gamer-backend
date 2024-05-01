@@ -1,0 +1,29 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv(".env.dev")
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+class Config:
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SESSION_PERMANENT = True
+    SESSION_TYPE = "filesystem"
+    PERMANENT_SESSION_LIFETIME = 10000
+    SESSION_COOKIE_SAMESITE = "None"
+    SESSION_COOKIE_SECURE = True
+    CORS_SUPPORTS_CREDENTIALS = True
+    SECRET_KEY = os.getenv("SECRET_KEY")
+
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, os.getenv("DATABASE_URL"))
+
+
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+
+
+config = os.getenv("MODE")
