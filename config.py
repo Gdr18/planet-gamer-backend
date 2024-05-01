@@ -1,7 +1,8 @@
 import os
-from dotenv import load_dotenv
 
-load_dotenv(".env.dev")
+# from dotenv import load_dotenv
+
+# load_dotenv(".env.dev")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -19,7 +20,9 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir, os.getenv("DATABASE_URL"))
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
+        basedir, os.getenv("DATABASE_URL")
+    )
 
 
 class ProductionConfig(Config):
