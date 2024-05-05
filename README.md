@@ -13,3 +13,5 @@ from src.app import db
 app.app_context().push()
 db.create_all()
 ```
+
+Actualmente sigue en construcción.
