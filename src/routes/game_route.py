@@ -1,59 +1,85 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 
 from ..database.db import ma, db
 from ..models.game_model import Game
 
+
 class GameSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'title', 'description', 'platform', 'platform_url', 'gender', 'pegi', 'release', 'price', 'img', 'qty')
+        fields = (
+            "id",
+            "title",
+            "description",
+            "platform",
+            "platform_url",
+            "gender",
+            "pegi",
+            "release",
+            "price",
+            "img",
+            "qty",
+        )
+
 
 game_schema = GameSchema()
 games_schema = GameSchema(many=True)
 
-game = Blueprint('game', __name__)
+game = Blueprint("game", __name__)
+
 
 @game.route("/games", methods=["POST", "GET"])
 def select_games():
-    if request.method  == "POST":
+    if request.method == "POST":
         for game in request.json:
-            title = game['title']
-            description = game['description']
-            platform = game['platform']
-            platform_url = game['platform_url']
-            gender = game['gender']
-            pegi = game['pegi']
-            release = game['release']
-            price = game['price']
-            img = game['img']
-            
-            new_game = Game(title, description, platform, platform_url, gender, pegi, release, price, img)
+            title = game["title"]
+            description = game["description"]
+            platform = game["platform"]
+            platform_url = game["platform_url"]
+            gender = game["gender"]
+            pegi = game["pegi"]
+            release = game["release"]
+            price = game["price"]
+            img = game["img"]
+
+            new_game = Game(
+                title,
+                description,
+                platform,
+                platform_url,
+                gender,
+                pegi,
+                release,
+                price,
+                img,
+            )
 
             db.session.add(new_game)
             db.session.commit()
 
         games = Game.query.all()
-        result = games_schema.dump(games)
 
-        return jsonify(result)
-        
+        return games_schema.jsonify(games)
+
     if request.method == "GET":
         all_games = Game.query.all()
-        result = games_schema.dump(all_games)
-        return jsonify(result)
-    
+        return games_schema.jsonify(all_games)
+
+
 @game.route("/game", methods=["POST"])
 def post_game():
-    title = request.json['title']
-    description = request.json['description']
-    platform = request.json['platform']
-    platform_url = request.json['platform_url']
-    gender = request.json['gender']
-    pegi = request.json['pegi']
-    release = request.json['release']
-    price = request.json['price']
-    img = request.json['img']
-    
-    new_game = Game(title, description, platform, platform_url, gender, pegi, release, price, img)
+    title = request.json["title"]
+    description = request.json["description"]
+    platform = request.json["platform"]
+    platform_url = request.json["platform_url"]
+    gender = request.json["gender"]
+    pegi = request.json["pegi"]
+    release = request.json["release"]
+    price = request.json["price"]
+    img = request.json["img"]
+
+    new_game = Game(
+        title, description, platform, platform_url, gender, pegi, release, price, img
+    )
 
     db.session.add(new_game)
     db.session.commit()
@@ -62,25 +88,25 @@ def post_game():
 
     return game_schema.jsonify(game)
 
-    
+
 @game.route("/game/<id>", methods=["GET", "PUT", "DELETE"])
 def select_game(id):
     if request.method == "GET":
         game = Game.query.get(id)
 
         return game_schema.jsonify(game)
-    
+
     if request.method == "PUT":
         game = Game.query.get(id)
-        title = request.json['title']
-        description = request.json['description']
-        gender = request.json['gender']
-        platform = request.json['platform']
-        platform_url = request.json['platformUrl']
-        pegi = request.json['pegi']
-        release = request.json['release']
-        price = request.json['price']
-        img = request.json['img']
+        title = request.json["title"]
+        description = request.json["description"]
+        gender = request.json["gender"]
+        platform = request.json["platform"]
+        platform_url = request.json["platformUrl"]
+        pegi = request.json["pegi"]
+        release = request.json["release"]
+        price = request.json["price"]
+        img = request.json["img"]
 
         game.title = title
         game.description = description
@@ -94,10 +120,10 @@ def select_game(id):
 
         db.session.commit()
         return game_schema.jsonify(game)
-    
+
     if request.method == "DELETE":
         game = Game.query.get(id)
         db.session.delete(game)
         db.session.commit()
 
-        return f'The game {id} was successfully deleted'
+        return f"The game {id} was successfully deleted"

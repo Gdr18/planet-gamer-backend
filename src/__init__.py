@@ -2,16 +2,18 @@ from flask import Flask
 from flask_cors import CORS
 
 from .database.db import db, bcrypt
+
 from .routes.address_route import address
 from .routes.basket_route import basket
 from .routes.user_route import user
 from .routes.game_route import game
 from .routes.order_route import order
 from .services.auth_service import auth
+from .services.games_basket_service import games_basket
+from .models.game_model import Game
 
 
 app = Flask(__name__)
-
 
 cors = CORS()
 
@@ -31,8 +33,10 @@ def create_app(config):
     app.register_blueprint(basket)
     app.register_blueprint(game)
     app.register_blueprint(auth)
+    app.register_blueprint(games_basket)
 
-    # app.app_context().push()
-    # db.create_all()
+    with app.app_context():
+        # Game.__table__.drop(bind=db.engine)
+        db.create_all()
 
     return app
