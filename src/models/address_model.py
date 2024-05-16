@@ -1,5 +1,6 @@
 from ..database.db import db
 
+
 class Address(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String(100), nullable=False)
@@ -14,3 +15,4 @@ class Address(db.Model):
         self.postal_code = postal_code
         self.city = city
         self.address_user_id = address_user_id
+

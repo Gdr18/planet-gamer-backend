@@ -11,9 +11,6 @@ flask-marshmallow = "*"
 flask-sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
 psycopg2 = "*"
-pytz = "*"
-waitress = "*"
-pendulum = "*"
 
 [dev-packages]
 python-dotenv = "*"

@@ -1,5 +1,6 @@
 from ..database.db import db
 
+
 class Basket(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     qty = db.Column(db.Integer, nullable=False)

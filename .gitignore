@@ -4,3 +4,5 @@ Pipfile.lock
 .env.dev
 .env.prod
 src/database/planet_gamer.db
+.vscode
+.idea/

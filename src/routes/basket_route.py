@@ -2,6 +2,8 @@ from flask import Blueprint, request
 
 from ..database.db import ma, db
 from ..models.basket_model import Basket
+from ..models.game_model import Game
+from ..routes.game_route import games_schema
 
 basket = Blueprint("basket", __name__)
 
@@ -86,7 +88,7 @@ def select_baskets():
 
             db.session.add(new_basket)
             db.session.commit()
-        baskets = Basket.query.filter_by(basket_user_id=basket_user_id).all()
+        baskets = Basket.query.filter_by(basket_user_id=request.json[0]["basket_user_id"]).all()
 
         return baskets_schema.jsonify(baskets)
 
@@ -97,3 +99,23 @@ def select_baskets():
             db.session.delete(basket)
             db.session.commit()
         return f"The basket items from user {basket_user_id} were successfully deleted."
+
+
+@basket.route("/basket-games/<basket_user_id>", methods=["GET"])
+def select_basket(basket_user_id):
+    if request.method == "GET":
+        games_and_baskets = (
+            db.session.query(Basket, Game)
+            .join(Basket)
+            .filter_by(basket_user_id=basket_user_id)
+            .all()
+        )
+
+        games = []
+
+        for basket, game in games_and_baskets:
+            game = Game.query.get(game.id)
+            game.qty = basket.qty
+            games.append(game)
+
+        return games_schema.jsonify(games)

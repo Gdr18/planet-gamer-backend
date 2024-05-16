@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 
-from ..database.db import ma, db, admin_list, bcrypt
+from ..database.db import ma, db, bcrypt
 from ..models.user_model import User
+from ..models.role_model import Role
 
 
 class UserSchema(ma.Schema):
@@ -11,34 +12,35 @@ class UserSchema(ma.Schema):
             "name",
             "email",
             "password",
-            "admin",
             "surnames",
             "phone_number",
+            "role"
         )
 
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
+
 user = Blueprint("user", __name__)
+
+
+@user.route("/users", methods=["GET"])
+def get_users():
+    all_users = User.query.all()
+    return users_schema.jsonify(all_users)
 
 
 @user.route("/user", methods=["POST"])
 def add_user():
-    name = request.json["name"]
-    password = request.json["password"]
-    email = request.json["email"]
-    phone_number = request.json["phone_number"]
-    surnames = request.json["surnames"]
+    user_data = request.json
 
-    if admin_list.count(email):
-        admin = True
-    else:
-        admin = False
+    user_role = Role.query.filter_by(email=user_data["email"]).first()
 
-    password = bcrypt.generate_password_hash(password).decode("utf-8")
+    user_data["password"] = bcrypt.generate_password_hash(user_data["password"]).decode("utf-8")
+    user_data["role"] = user_role.type if user_role is not None else 3
 
-    new_user = User(email, name, password, admin, surnames, phone_number)
+    new_user = User(**user_data)
 
     db.session.add(new_user)
     db.session.commit()
@@ -46,12 +48,6 @@ def add_user():
     user = User.query.get(new_user.id)
 
     return user_schema.jsonify(user)
-
-
-@user.route("/users", methods=["GET"])
-def get_users():
-    all_users = User.query.all()
-    return users_schema.jsonify(all_users)
 
 
 @user.route("/user/<id>", methods=["GET", "DELETE", "PUT"])
@@ -70,22 +66,15 @@ def select_user(id):
 
     if request.method == "PUT":
         user = User.query.get(id)
-        name = request.json["name"]
-        email = request.json["email"]
-        password = request.json["password"]
-        surnames = request.json["surnames"]
-        phone_number = request.json["phone_number"]
-        admin = request.json["admin"]
 
-        user.name = name
-        user.email = email
-
-        if password != "" and not bcrypt.check_password_hash(user.password, password):
-            user.password = bcrypt.generate_password_hash(password).decode("utf-8")
-
-        user.surnames = surnames
-        user.phone_number = phone_number
-        user.admin = admin
+        for key, value in request.json.items():
+            if key == "password":
+                if value != "" and not bcrypt.check_password_hash(user.password, value):
+                    user.password = bcrypt.generate_password_hash(value).decode("utf-8")
+            elif key == "role":
+                user.role = user.role
+            else:
+                setattr(user, key, value)
 
         db.session.commit()
         return user_schema.jsonify(user)

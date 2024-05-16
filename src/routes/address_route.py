@@ -31,7 +31,7 @@ def add_address(address_user_id):
 
     user_address = Address.query.filter_by(address_user_id=address_user_id).first()
 
-    if user_address != None:
+    if user_address is not None:
         user_address.street = street
         user_address.second_line_street = second_line_street
         user_address.postal_code = postal_code

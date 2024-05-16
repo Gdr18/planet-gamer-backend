@@ -25,15 +25,17 @@ def select_orders():
 @order.route("/orders/<order_user_id>", methods=["GET"])
 def get_orders(order_user_id):
     user = User.query.get(order_user_id)
-    if user != None:
+    if user is not None:
         orders = user.orders
         for order in orders:
             order.date = order.date.strftime("%d-%m-%Y, %H:%M:%S")
         return orders_schema.jsonify(orders)
+    else:
+        return "User not found"
 
 
 @order.route("/order", methods=["POST"])
-def post_order(order_user_id):
+def post_order():
     total = request.json["total"]
     qty = request.json["qty"]
     order_user_id = request.json["order_user_id"]
