@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session
 
-from ..database.db import ma, db
+from ..utils.instantiations import ma, db
 from ..models.role_model import Role
 from ..models.user_model import User
 

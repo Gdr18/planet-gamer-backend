@@ -1,6 +1,6 @@
 from flask import Blueprint, request, session
 
-from ..database.db import db, bcrypt
+from ..utils.instantiations import db, bcrypt
 from ..models.user_model import User
 from ..models.role_model import Role
 from ..routes.user_route import user_schema

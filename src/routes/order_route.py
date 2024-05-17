@@ -1,6 +1,6 @@
 from flask import request, Blueprint
 
-from ..database.db import ma, db
+from ..utils.instantiations import ma, db
 from ..models.user_model import User
 from ..models.order_model import Order
 
@@ -36,11 +36,7 @@ def get_orders(order_user_id):
 
 @order.route("/order", methods=["POST"])
 def post_order():
-    total = request.json["total"]
-    qty = request.json["qty"]
-    order_user_id = request.json["order_user_id"]
-
-    new_order = Order(total, qty, order_user_id)
+    new_order = Order(**request.json)
 
     db.session.add(new_order)
     db.session.commit()
@@ -51,24 +47,18 @@ def post_order():
 
 @order.route("/order/<id>", methods=["GET", "PUT", "DELETE"])
 def select_order(id):
+    order = Order.query.get(id)
     if request.method == "GET":
-        order = Order.query.get(id)
         return order_schema.jsonify(order)
 
     if request.method == "PUT":
-        order = Order.query.get(id)
-        total = request.json["total"]
-        qty = request.json["qty"]
-
-        order.total = total
-        order.qty = qty
+        for key, value in request.json.items():
+            setattr(order, key, value)
 
         db.session.commit()
         return order_schema.jsonify(order)
 
     if request.method == "DELETE":
-        order = Order.query.get(id)
-
         db.session.delete(order)
         db.session.commit()
 

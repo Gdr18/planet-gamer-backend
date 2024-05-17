@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from ..database.db import ma, db
+from ..utils.instantiations import ma, db
 from ..models.basket_model import Basket
 from ..models.game_model import Game
 from ..routes.game_route import games_schema

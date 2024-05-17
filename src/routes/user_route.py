@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from ..database.db import ma, db, bcrypt
+from ..utils.instantiations import ma, db, bcrypt
 from ..models.user_model import User
 from ..models.role_model import Role
 
@@ -52,21 +52,17 @@ def add_user():
 
 @user.route("/user/<id>", methods=["GET", "DELETE", "PUT"])
 def select_user(id):
+    user = User.query.get(id)
     if request.method == "GET":
-        user = User.query.get(id)
         return user_schema.jsonify(user)
 
     if request.method == "DELETE":
-        user = User.query.get(id)
-
         db.session.delete(user)
         db.session.commit()
 
         return f"The user {id} was successfully deleted"
 
     if request.method == "PUT":
-        user = User.query.get(id)
-
         for key, value in request.json.items():
             if key == "password":
                 if value != "" and not bcrypt.check_password_hash(user.password, value):

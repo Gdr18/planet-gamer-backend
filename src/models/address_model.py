@@ -1,4 +1,4 @@
-from ..database.db import db
+from ..utils.instantiations import db
 
 
 class Address(db.Model):
@@ -8,6 +8,7 @@ class Address(db.Model):
     postal_code = db.Column(db.String(5), nullable=False)
     city = db.Column(db.String(40), nullable=False)
     address_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    orders = db.relationship('Order', backref='address', lazy=True)
 
     def __init__(self, street, second_line_street, postal_code, city, address_user_id):
         self.street = street
