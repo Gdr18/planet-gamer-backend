@@ -6,6 +6,9 @@ load_dotenv(".env.dev")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+TURSO_DATABASE_URL = os.getenv("DATABASE_URL")
+TURSO_AUTH_TOKEN = os.getenv("AUTH_TOKEN")
+
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False

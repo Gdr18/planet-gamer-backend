@@ -11,6 +11,7 @@ flask-marshmallow = "*"
 flask-sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
 psycopg2 = "*"
+sqlalchemy-libsql = "*"
 
 [dev-packages]
 python-dotenv = "*"
