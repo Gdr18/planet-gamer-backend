@@ -1,8 +1,11 @@
+from datetime import datetime
+
 from ..utils.instantiations import db
 
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     title = db.Column(db.String(50), unique=True, nullable=False)
     description = db.Column(db.String(1500), unique=True, nullable=False)
     platform = db.Column(db.String(20), nullable=False)
