@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 from .utils.instantiations import db, bcrypt, ma
@@ -11,6 +11,7 @@ from .routes.role_route import role
 from .routes.order_route import order
 from .routes.order_details_route import order_details
 from .services.auth_service import auth
+
 # from .models.order_details_model import OrderDetails
 # from .models.basket_model import Basket
 
@@ -20,26 +21,36 @@ app = Flask(__name__)
 cors = CORS()
 
 
+@app.route("/", methods=["GET"])
+def welcome():
+	return jsonify(msg="Bienvenidx a la API REST de Planet Gamer!"), 200
+
+
+@app.route("/keep-alive", methods=["GET"])
+def keep_alive_dev():
+	return jsonify(msg="Keep alive Planet Gamer realizado de forma satisfactoria"), 200
+
+
 def create_app(config):
-    app.config.from_object(config)
+	app.config.from_object(config)
 
-    db.init_app(app)
-    cors.init_app(app)
-    bcrypt.init_app(app)
-    ma.init_app(app)
+	db.init_app(app)
+	cors.init_app(app)
+	bcrypt.init_app(app)
+	ma.init_app(app)
 
-    app.register_blueprint(user)
-    app.register_blueprint(order)
-    app.register_blueprint(order_details)
-    app.register_blueprint(address)
-    app.register_blueprint(basket)
-    app.register_blueprint(game)
-    app.register_blueprint(role)
-    app.register_blueprint(auth)
+	app.register_blueprint(user)
+	app.register_blueprint(order)
+	app.register_blueprint(order_details)
+	app.register_blueprint(address)
+	app.register_blueprint(basket)
+	app.register_blueprint(game)
+	app.register_blueprint(role)
+	app.register_blueprint(auth)
 
-    with app.app_context():
-        # OrderDetails.__table__.drop(bind=db.engine)
-        # Game.__table__.drop(bind=db.engine)
-        db.create_all()
+	with app.app_context():
+		# OrderDetails.__table__.drop(bind=db.engine)
+		# Game.__table__.drop(bind=db.engine)
+		db.create_all()
 
-    return app
+	return app
