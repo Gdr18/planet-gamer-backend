@@ -2,7 +2,7 @@ import os
 
 from dotenv import load_dotenv
 
-# load_dotenv(".env.dev")
+#load_dotenv(".env.dev")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

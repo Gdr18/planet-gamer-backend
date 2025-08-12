@@ -8,6 +8,7 @@ class GameSchema(ma.Schema):
     class Meta:
         fields = (
             "id",
+            "date",
             "title",
             "description",
             "platform",
@@ -17,7 +18,7 @@ class GameSchema(ma.Schema):
             "release",
             "price",
             "img",
-            "qty",
+            "stock",
         )
 
 
@@ -34,23 +35,23 @@ def select_games():
             title = game["title"]
             description = game["description"]
             platform = game["platform"]
-            platform_url = game["platform_url"]
             gender = game["gender"]
             pegi = game["pegi"]
             release = game["release"]
             price = game["price"]
             img = game["img"]
+            stock = game.get("stock", 100)
 
             new_game = Game(
                 title,
                 description,
                 platform,
-                platform_url,
                 gender,
                 pegi,
                 release,
                 price,
                 img,
+                stock
             )
 
             db.session.add(new_game)
@@ -70,15 +71,15 @@ def post_game():
     title = request.json["title"]
     description = request.json["description"]
     platform = request.json["platform"]
-    platform_url = request.json["platform_url"]
     gender = request.json["gender"]
     pegi = request.json["pegi"]
     release = request.json["release"]
     price = request.json["price"]
     img = request.json["img"]
+    stock = request.json.get("stock", 100)
 
     new_game = Game(
-        title, description, platform, platform_url, gender, pegi, release, price, img
+        title, description, platform, gender, pegi, release, price, img, stock
     )
 
     db.session.add(new_game)
