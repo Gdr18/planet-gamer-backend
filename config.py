@@ -2,12 +2,9 @@ import os
 
 from dotenv import load_dotenv
 
-load_dotenv(".env.dev")
+# load_dotenv(".env.dev")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-TURSO_DATABASE_URL = os.getenv("DATABASE_URL")
-TURSO_AUTH_TOKEN = os.getenv("AUTH_TOKEN")
 
 
 class Config:
@@ -25,12 +22,12 @@ class Config:
 class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
-        basedir, os.getenv("DATABASE_URL")
+        basedir, os.getenv("DATABASE_URI")
     )
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI")
 
 
 config = os.getenv("MODE")
