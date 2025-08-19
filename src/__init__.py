@@ -16,7 +16,7 @@ from .services.auth_service import auth
 # from .models.basket_model import Basket
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 
 cors = CORS()
 
