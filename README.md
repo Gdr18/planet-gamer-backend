@@ -28,7 +28,7 @@ Estado: en desarrollo.
 
 ---
 
-⚙️ Instalación local
+## ⚙️ Instalación local
 1. Clona este repositorio:
 
 ```
