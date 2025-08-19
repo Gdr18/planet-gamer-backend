@@ -2,9 +2,10 @@ import os
 
 from dotenv import load_dotenv
 
-#load_dotenv(".env.dev")
+# load_dotenv(".env.prod")
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+PORT = int(os.getenv("PORT", 5000))
 
 
 class Config:
@@ -30,4 +31,4 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URI")
 
 
-config = os.getenv("MODE")
+config = os.getenv("CONFIG_MODE")

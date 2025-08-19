@@ -6,3 +6,5 @@ Pipfile.lock
 src/utils/planet_gamer.db
 .vscode
 .idea/
+Pipfile
+.dockerignore
