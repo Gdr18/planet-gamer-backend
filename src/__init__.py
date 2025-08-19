@@ -23,7 +23,7 @@ cors = CORS()
 
 @app.route("/", methods=["GET"])
 def welcome():
-    return jsonify(msg="Bienvenidx a la API REST de Planet Gamer!"), 200
+    return "Bienvenidx a la API REST de Planet Gamer!", 200
 
 
 def create_app(config):
